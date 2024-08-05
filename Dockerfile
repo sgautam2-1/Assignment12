@@ -1,12 +1,19 @@
 FROM node:lts-iron
- 
-WORKDIR /gautam_saurav_ui_garden/
- 
-COPY public/ /gautam_saurav_ui_garden/public
-COPY src/ /gautam_saurav_ui_garden/src
-COPY package.json /gautam_saurav_ui_garden/
-COPY . /gautam_saurav_ui_garden
- 
+
+# Set the working directory
+WORKDIR /gautam_saurav_ui_garden
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
- 
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 6006
+
+# Start Storybook
 CMD ["npm", "run", "storybook"]
