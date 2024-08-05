@@ -12,22 +12,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      docker:
-        image: docker:19.03.12
-        options: --privileged
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Cache Node.js modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -40,18 +35,15 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Build Storybook
-        run: npm run build-storybook
-
       - name: Build Docker image
-        run: docker build -t saurahasaurab7@gmail.com/Assignment12 .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/assignment12 .
 
       - name: Log in to DockerHub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image
-        run: docker push saurahasaurab7@gmail.com/Assignment12
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/assignment12
 
       - name: Deploy to DockerHub
         if: github.ref == 'refs/heads/main'
-        run: docker run -d -p 3000:3000 saurahasaurab7@gmail.com/Assignment12
+        run: docker run -d -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/assignment12
