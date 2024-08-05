@@ -1,3 +1,4 @@
+
 // Button.types.ts
 export interface ButtonProps {
   children: React.ReactNode;
@@ -5,3 +6,4 @@ export interface ButtonProps {
   backgroundColor?: string;
   visible?: boolean; // Add the visible property
 }
+

@@ -1,3 +1,4 @@
+
 export interface CardProps {
   title: string;
   description: string;
@@ -5,3 +6,4 @@ export interface CardProps {
   visible?: boolean;
   disabled?: boolean;
 }
+
