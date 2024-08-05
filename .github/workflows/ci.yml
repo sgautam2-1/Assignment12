@@ -36,14 +36,15 @@ jobs:
         run: npm test
 
       - name: Build Docker image
-        run: docker build -t gautam_saurav_assignment13 .
+        run: docker build -t sgautam2/gautam_saurav_assignment13 .
 
       - name: Log in to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: |
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image
-        run: docker push gautam_saurav_assignment13
+        run: docker push sgautam2/gautam_saurav_assignment13
 
       - name: Deploy to DockerHub
         if: github.ref == 'refs/heads/main'
-        run: docker run -d -p 8018:8018 gautam_saurav_assignment13
+        run: docker run -d -p 8018:8018 sgautam2/gautam_saurav_assignment13
