@@ -2,33 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import { LabelProps } from './Label.types';
 
+interface StyledLabelProps {
+  bgColor?: string;
+  disabled?: boolean;
+}
 
-const StyledLabel = styled.label<LabelProps>`
-  font-size: 24px;
-  color: ${({ disabled }) => (disabled ? 'grey' : 'purple')};
-  background-color: ${({ backgroundColor }) => backgroundColor || 'transparent'};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  transition: color 0.3s ease, transform 0.3s ease;
+const StyledLabel = styled.label<StyledLabelProps>`
+  background-color: ${({ bgColor }) => bgColor || 'transparent'};
+  padding: 8px;
+  margin: 4px;
+  border-radius: 4px;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  color: ${({ disabled }) => (disabled ? '#a9a9a9' : '#000000')};
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
-  &:hover {
-    color: ${({ disabled }) => (disabled ? 'grey' : 'blue')};
-  }
-
-  &:focus {
-    outline: ${({ disabled }) => (disabled ? 'none' : '2px solid blue')};
-  }
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 18px;
+ &:hover {
+    background-color: #f0f0f0; 
   }
 `;
 
-const Label: React.FC<LabelProps> = ({ children, disabled, backgroundColor }) => {
-  return <StyledLabel disabled={disabled} backgroundColor={backgroundColor}>{children}</StyledLabel>;
+const Label: React.FC<LabelProps> = ({ children, disabled, backgroundColor, visible = true }) => {
+  if (!visible) return null;
+  return (
+    <StyledLabel bgColor={backgroundColor} disabled={disabled}>
+      {children}
+    </StyledLabel>
+  );
 };
 
 export default Label;

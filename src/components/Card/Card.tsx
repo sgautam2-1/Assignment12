@@ -1,40 +1,53 @@
+import React from 'react';
 import styled from 'styled-components';
-import { CustomCardProps } from './Card.types';
+import { CardProps } from './Card.types';
 
-interface StyledCustomCardProps extends CustomCardProps {
-  backgroundColor?: string;
-    className?: string;
+interface StyledCardProps {
+  visible: boolean;
+  disabled: boolean;
 }
 
-const StyledCustomCard = styled.div<StyledCustomCardProps>`
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: ${({ disabled, backgroundColor }) => (disabled ? backgroundColor || '#d3d3d3' : backgroundColor || '#add8e6')};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+const CardContainer = styled.div<StyledCardProps>`
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
+  width: 300px; /* Make the card smaller */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px auto; /* Center the card */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 
   &:hover {
-    box-shadow: ${({ disabled }) => (disabled ? '0 4px 8px rgba(0, 0, 0, 0.1)' : '0 8px 16px rgba(0, 0, 0, 0.2)')};
-    transform: ${({ disabled }) => (disabled ? 'none' : 'translateY(-4px)')};
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  @media (max-width: 768px) {
-    padding: 15px;
-    font-size: 14px;
-  }
-  @media (max-width: 480px) {
-    padding: 10px;
-    font-size: 12px;
+    transform: scale(1.1);
   }
 `;
 
-const CustomCard: React.FC<StyledCustomCardProps> = ({ children, disabled, backgroundColor }) => {
-  return <StyledCustomCard disabled={disabled} backgroundColor={backgroundColor}>{children}</StyledCustomCard>;
+const CardImage = styled.img`
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+`;
+
+const CardTitle = styled.h2`
+  font-size: 20px; /* Adjusted font size */
+  margin: 16px 0 8px 0;
+`;
+
+const CardDescription = styled.p`
+  font-size: 14px; /* Adjusted font size */
+  color: #555;
+`;
+
+const Card: React.FC<CardProps> = ({ title, description, imageUrl, visible = true, disabled = false }) => {
+  if (!visible) return null;
+  return (
+    <CardContainer visible={visible} disabled={disabled} data-testid="card-container">
+      <CardImage src={imageUrl} alt={title} />
+      <CardTitle>{title}</CardTitle>
+      <CardDescription>{description}</CardDescription>
+    </CardContainer>
+  );
 };
 
-export default CustomCard;
+export default Card;

@@ -1,45 +1,52 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DropdownProps, Option } from './Dropdown.types';
+import { DropdownProps } from './Dropdown.types';
 
-interface StyledSelectProps {
-  isDisabled: boolean;
+interface StyledDropdownProps {
+  visible: boolean;
   backgroundColor: string;
-  className?: string;
+  disabled: boolean;
 }
 
-const StyledSelect = styled.select<StyledSelectProps>`
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
+const DropdownContainer = styled.div<StyledDropdownProps>`
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border: 1px solid #ccc;
-  background-color: ${({ isDisabled, backgroundColor }) => (isDisabled ? backgroundColor || '#d3d3d3' : backgroundColor || '#90ee90')};
-  &:disabled {
-    cursor: not-allowed;
-  }
-  &:hover {
-    background-color: ${({ isDisabled }) => (isDisabled ? 'grey' : '#e0ffff')};
-  }
+  border-radius: 4px;
+  padding: 8px;
+  margin: 8px;
 
-  @media (max-width: 768px) {
-    padding: 8px;
-    font-size: 14px;
-  }
-  @media (max-width: 480px) {
-    padding: 6px;
-    font-size: 12px;
+  &:hover {
+    background-color: #f0f0f0; 
   }
 `;
 
-const Dropdown: React.FC<DropdownProps> = ({ options, disabled, backgroundColor }) => {
+const Select = styled.select<StyledDropdownProps>`
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: inherit;
+  color: #333;
+
+  &:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+  }
+`;
+
+const Dropdown: React.FC<DropdownProps> = ({ options, disabled = false, backgroundColor = 'white', visible = true }) => {
+  if (!visible) return null;
   return (
-    <StyledSelect isDisabled={!!disabled} backgroundColor={backgroundColor || 'green'} disabled={disabled}>
-      {options.map((option: Option, index: number) => (
-        <option key={index} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </StyledSelect>
+    <DropdownContainer visible={visible} backgroundColor={backgroundColor} disabled={disabled} data-testid="dropdown-container">
+      <Select disabled={disabled} backgroundColor={backgroundColor} visible={visible}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </Select>
+    </DropdownContainer>
   );
 };
 

@@ -1,29 +1,81 @@
-import { Meta, StoryFn } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 import Button from './Button';
-import { ButtonProps } from './Button.types';
 
-export default {
+const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
   argTypes: {
     children: { control: 'text', defaultValue: 'Click Me!' },
     disabled: { control: 'boolean' },
-    backgroundColor: { control: 'color' }, // Add background color control
+    backgroundColor: { control: 'color' },
+    visible: { control: 'boolean', defaultValue: true },
   },
-} as Meta;
-
-const Template: StoryFn<ButtonProps> = (args) => <Button {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  children: 'Click Me!',
-  disabled: false,
-  backgroundColor: '#4CAF50', // Default background color
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  children: 'I am Disabled',
-  disabled: true,
-  backgroundColor: '#A9A9A9', // Disabled background color
+export default meta;
+type Story = StoryObj<typeof Button>;
+
+export const Default: Story = {
+  args: {
+    children: 'Click Me!',
+    disabled: false,
+    backgroundColor: '#4CAF50',
+    visible: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+
+    await expect(button).toBeVisible();
+    await expect(button).not.toBeDisabled();
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'I am Disabled',
+    disabled: true,
+    backgroundColor: '#A9A9A9',
+    visible: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+
+    await expect(button).toBeDisabled();
+  },
+};
+
+export const Invisible: Story = {
+  args: {
+    children: 'You Can\'t See Me!',
+    disabled: false,
+    backgroundColor: '#4CAF50',
+    visible: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.queryByRole('button');
+
+    await expect(button).toBeNull();
+  },
+};
+
+
+export const Clickable: Story = {
+  args: {
+    children: 'Click Me!',
+    disabled: false,
+    backgroundColor: '#4CAF50',
+    visible: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+
+    await userEvent.click(button);
+    await expect(button).toHaveTextContent('Click Me!');
+  },
 };

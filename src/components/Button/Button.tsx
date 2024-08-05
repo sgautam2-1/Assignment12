@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ButtonProps } from './Button.types';
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled.button<ButtonProps & { hoverClass?: string }>`
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 5px;
@@ -12,7 +12,7 @@ const StyledButton = styled.button<ButtonProps>`
   color: white;
   transition: background-color 0.3s ease, transform 0.3s ease;
 
-  &:hover {
+  &.hover {
     background-color: ${({ disabled }) => (disabled ? 'grey' : '#0053ba')};
   }
 
@@ -29,7 +29,8 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-const Button: React.FC<ButtonProps> = ({ children, disabled, backgroundColor }) => {
+const Button: React.FC<ButtonProps> = ({ children, disabled, backgroundColor, visible = true }) => {
+  if (!visible) return null;
   return <StyledButton disabled={disabled} backgroundColor={backgroundColor}>{children}</StyledButton>;
 };
 
