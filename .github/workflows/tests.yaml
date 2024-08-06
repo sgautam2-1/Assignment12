@@ -14,5 +14,6 @@ jobs:
       - name: Build docker images
         run: docker build -t main -f $COMPOSE_FILE .
  
+ 
       - name: Run tests
         run: docker run main
