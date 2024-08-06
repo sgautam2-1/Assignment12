@@ -14,20 +14,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           node-version: 18
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm install
@@ -36,15 +28,14 @@ jobs:
         run: npm test
 
       - name: Build Docker image
-        run: docker build -t sgautam2/gautam_saurav_assignment13 .
+        run: docker build -t sgautam2/gautam_saurav_assignment13:latest .
 
       - name: Log in to DockerHub
-        run: |
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image
-        run: docker push sgautam2/gautam_saurav_assignment13
+        run: docker push sgautam2/gautam_saurav_assignment13:latest
 
       - name: Deploy to DockerHub
         if: github.ref == 'refs/heads/main'
-        run: docker run -d -p 8018:8018 sgautam2/gautam_saurav_assignment13
+        run: docker run -d -p 8018:8018 sgautam2/gautam_saurav_assignment13:latest
