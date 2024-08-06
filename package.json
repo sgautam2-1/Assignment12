@@ -11,7 +11,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "ci:test": "jest --ci --runInBand"
+    "ci:test": "jest --ci --runInBand",
+    "test:storybook": "start-storybook -p 6006 -s public"
   },
   "jest": {
     "transform": {
