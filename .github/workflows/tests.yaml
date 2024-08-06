@@ -1,18 +1,20 @@
 name: Run Tests
+
 on: push
+
 jobs:
   test:
     name: Run Test suite
     runs-on: ubuntu-latest
     env:
       COMPOSE_FILE: Dockerfile.ci
- 
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
- 
-      - name: Build docker images
-        run: docker build -t main -f $COMPOSE_FILE .
- 
+        uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: docker build -t main -f Dockerfile.ci .
+
       - name: Run tests
         run: docker run main
