@@ -13,10 +13,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
 
       - name: Run Jest tests
         run: npm test
@@ -27,7 +30,7 @@ jobs:
       - name: Start Storybook
         run: |
           npm run storybook &
-          sleep 20 
+          sleep 20 # Adjust the sleep time as needed to ensure Storybook is fully started
 
       - name: Run Storybook interaction tests
         run: npx @storybook/test-runner
