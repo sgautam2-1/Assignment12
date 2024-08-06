@@ -25,4 +25,4 @@ jobs:
         run: npm run build-storybook
 
       - name: Run Storybook interaction tests
-        run: npx storybook test
+        run: npx storybook test-runner
