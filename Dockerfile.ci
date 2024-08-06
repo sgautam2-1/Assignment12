@@ -10,6 +10,6 @@ RUN npx playwright install --with-deps chromium
 
 COPY . .
 
-RUN npm install @storybook/react @storybook/react-vite @storybook/cli @storybook/test --save-dev
+RUN npm install @storybook/cli --save-dev
 
-CMD ["npm", "run", "ci:test"]
+CMD ["npm","run","ci:test"]

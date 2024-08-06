@@ -12,7 +12,7 @@
     "build-storybook": "storybook build",
     "test": "jest",
     "ci:test": "jest --ci --runInBand && npm run test:storybook",
-    "test:storybook": "start-storybook -p 6006 -s public --ci"
+    "test:storybook": "storybook dev -p 6006 --ci"
   },
   "jest": {
     "transform": {
