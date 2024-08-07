@@ -13,3 +13,5 @@ COPY . .
 RUN npm install @storybook/cli --save-dev
 
 CMD ["npm","run","ci:test"]
+
+
