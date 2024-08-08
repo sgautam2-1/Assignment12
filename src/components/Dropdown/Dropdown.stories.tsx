@@ -8,9 +8,6 @@ const meta: Meta<typeof Dropdown> = {
   component: Dropdown,
   argTypes: {
     options: { control: 'object' },
-    disabled: { control: 'boolean' },
-    backgroundColor: { control: 'color' },
-    visible: { control: 'boolean', defaultValue: true },
   },
 };
 
@@ -20,14 +17,11 @@ type Story = StoryObj<typeof Dropdown>;
 export const Default: Story = {
   args: {
     options: [
-      { value: 'pizza', label: 'Pizza' },
-      { value: 'tacos', label: 'Tacos' },
-      { value: 'sushi', label: 'Sushi' },
-      { value: 'icecream', label: 'Ice Cream' },
+      { label: 'Pizza', onClick: () => {} },
+      { label: 'Tacos', onClick: () => {} },
+      { label: 'Sushi', onClick: () => {} },
+      { label: 'Ice Cream', onClick: () => {} },
     ],
-    disabled: false,
-    backgroundColor: '#ffffff',
-    visible: true,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -42,14 +36,11 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     options: [
-      { value: 'pizza', label: 'Pizza' },
-      { value: 'tacos', label: 'Tacos' },
-      { value: 'sushi', label: 'Sushi' },
-      { value: 'icecream', label: 'Ice Cream' },
+      { label: 'Pizza', onClick: () => {} },
+      { label: 'Tacos', onClick: () => {} },
+      { label: 'Sushi', onClick: () => {} },
+      { label: 'Ice Cream', onClick: () => {} },
     ],
-    disabled: true,
-    backgroundColor: '#d3d3d3',
-    visible: true,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -63,14 +54,11 @@ export const Disabled: Story = {
 export const Invisible: Story = {
   args: {
     options: [
-      { value: 'pizza', label: 'Pizza' },
-      { value: 'tacos', label: 'Tacos' },
-      { value: 'sushi', label: 'Sushi' },
-      { value: 'icecream', label: 'Ice Cream' },
+      { label: 'Pizza', onClick: () => {} },
+      { label: 'Tacos', onClick: () => {} },
+      { label: 'Sushi', onClick: () => {} },
+      { label: 'Ice Cream', onClick: () => {} },
     ],
-    disabled: false,
-    backgroundColor: '#ffffff',
-    visible: false,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -83,14 +71,11 @@ export const Invisible: Story = {
 export const Hover: Story = {
   args: {
     options: [
-      { value: 'pizza', label: 'Pizza' },
-      { value: 'tacos', label: 'Tacos' },
-      { value: 'sushi', label: 'Sushi' },
-      { value: 'icecream', label: 'Ice Cream' },
+      { label: 'Pizza', onClick: () => {} },
+      { label: 'Tacos', onClick: () => {} },
+      { label: 'Sushi', onClick: () => {} },
+      { label: 'Ice Cream', onClick: () => {} },
     ],
-    disabled: false,
-    backgroundColor: '#ffffff',
-    visible: true,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -106,21 +91,18 @@ export const Hover: Story = {
 export const SelectOption: Story = {
   args: {
     options: [
-      { value: 'pizza', label: 'Pizza' },
-      { value: 'tacos', label: 'Tacos' },
-      { value: 'sushi', label: 'Sushi' },
-      { value: 'icecream', label: 'Ice Cream' },
+      { label: 'Pizza', onClick: () => {} },
+      { label: 'Tacos', onClick: () => {} },
+      { label: 'Sushi', onClick: () => {} },
+      { label: 'Ice Cream', onClick: () => {} },
     ],
-    disabled: false,
-    backgroundColor: '#ffffff',
-    visible: true,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const select = canvas.getByRole('combobox');
 
-    await userEvent.selectOptions(select, 'tacos');
+    await userEvent.selectOptions(select, 'Tacos');
 
-    await expect(select).toHaveValue('tacos');
+    await expect(select).toHaveValue('Tacos');
   },
 };

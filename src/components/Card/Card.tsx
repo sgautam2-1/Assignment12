@@ -1,4 +1,3 @@
-
 import React from 'react';
 import styled from 'styled-components';
 import { CardProps } from './Card.types';
@@ -40,10 +39,10 @@ const CardDescription = styled.p`
   color: #555;
 `;
 
-const Card: React.FC<CardProps> = ({ title, description, imageUrl, visible = true, disabled = false }) => {
+const Card: React.FC<CardProps> = ({ title, description, imageUrl, visible = true, disabled = false, onClick }) => {
   if (!visible) return null;
   return (
-    <CardContainer visible={visible} disabled={disabled} data-testid="card-container">
+    <CardContainer visible={visible} disabled={disabled} data-testid="card-container" onClick={onClick}>
       <CardImage src={imageUrl} alt={title} />
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>

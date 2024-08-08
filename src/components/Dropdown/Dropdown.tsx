@@ -1,53 +1,47 @@
-
 import React from 'react';
 import styled from 'styled-components';
-import { DropdownProps } from './Dropdown.types';
 
-interface StyledDropdownProps {
-  visible: boolean;
-  backgroundColor: string;
-  disabled: boolean;
-}
+const DropdownMenu = styled.div`
+  position: relative;
+  display: inline-block;
 
-const DropdownContainer = styled.div<StyledDropdownProps>`
-  display: ${({ visible }) => (visible ? 'block' : 'none')};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  margin: 8px;
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 
-  &:hover {
-    background-color: #f0f0f0; 
+    a {
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+
+      &:hover {
+        background-color: #444;
+      }
+    }
+  }
+
+  &:hover .dropdown-content {
+    display: block;
   }
 `;
 
-const Select = styled.select<StyledDropdownProps>`
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  background-color: inherit;
-  color: #333;
-
-  &:disabled {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
-  }
-`;
-
-const Dropdown: React.FC<DropdownProps> = ({ options, disabled = false, backgroundColor = 'white', visible = true }) => {
-  if (!visible) return null;
+const Dropdown: React.FC<{ options: { label: string; onClick: () => void }[] }> = ({ options }) => {
   return (
-    <DropdownContainer visible={visible} backgroundColor={backgroundColor} disabled={disabled} data-testid="dropdown-container">
-      <Select disabled={disabled} backgroundColor={backgroundColor} visible={visible}>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
+    <DropdownMenu>
+      <span>Menu</span>
+      <div className="dropdown-content">
+        {options.map((option, index) => (
+          <a key={index} href="#" onClick={option.onClick}>
             {option.label}
-          </option>
+          </a>
         ))}
-      </Select>
-    </DropdownContainer>
+      </div>
+    </DropdownMenu>
   );
 };
 
