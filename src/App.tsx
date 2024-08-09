@@ -20,7 +20,7 @@ import testinomial2Image from './assets/images/testinomial2.jpg';
 import testinomial3Image from './assets/images/testinomial3.jpg';
 
 const App: React.FC = () => {
-  const [showContactForm, setShowContactForm] = useState(false);
+  const [showContactForm] = useState(false);
 
   const testinomials = [
     {
@@ -64,27 +64,22 @@ const App: React.FC = () => {
     },
   ];
 
-  const handleNavigationClick = (sectionId: string) => {
-    if (sectionId === 'footer-contact') {
-      setShowContactForm(true);
-    } else {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   const handleSearch = (term: string) => {
-    const elements = document.querySelectorAll('section, h2, p, span, div');
-    elements.forEach((element) => {
-      element.innerHTML = element.innerHTML.replace(/<span class="underline">(.*?)<\/span>/g, '$1');
+    const contentElements = document.querySelectorAll('section, h2, p, span, div');
+    let found = false;
+
+    contentElements.forEach((element) => {
+      const htmlElement = element as HTMLElement; // Cast to HTMLElement
+      const textContent = htmlElement.textContent || '';
+      const regex = new RegExp(`(${term})`, 'gi');
+      if (textContent.match(regex)) {
+        found = true;
+        htmlElement.innerHTML = textContent.replace(regex, `<span class="highlighted">$1</span>`);
+      }
     });
-    if (term) {
-      elements.forEach((element) => {
-        const regex = new RegExp(`(${term})`, 'gi');
-        element.innerHTML = element.innerHTML.replace(regex, `<span class="underline">$1</span>`);
-      });
+
+    if (!found) {
+      alert('No results found');
     }
   };
 
@@ -95,25 +90,25 @@ const App: React.FC = () => {
         <div className="header-content">
           <Logo src="path_to_logo" alt="Site Logo" />
           <div className="navbar-desktop">
-          <Navbar
-  links={[
-    { href: '#header', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#testimonials', label: 'Testimonials' },
-    { href: '#footer-contact', label: 'Contact' },
-  ]}
-  activeLink="#header" 
-/>
+            <Navbar
+              links={[
+                { href: '#header', label: 'Home' },
+                { href: '#about', label: 'About' },
+                { href: '#projects', label: 'Projects' },
+                { href: '#testimonials', label: 'Testimonials' },
+                { href: '#footer-contact', label: 'Contact' },
+              ]}
+              activeLink="#header" 
+            />
           </div>
           <div className="navbar-mobile">
             <Dropdown
               options={[
-                { label: 'Home', onClick: () => handleNavigationClick('header') },
-                { label: 'About', onClick: () => handleNavigationClick('about') },
-                { label: 'Projects', onClick: () => handleNavigationClick('projects') },
-                { label: 'Testimonials', onClick: () => handleNavigationClick('testimonials') },
-                { label: 'Contact', onClick: () => handleNavigationClick('footer-contact') },
+                { label: 'Home', href: '#header' },
+                { label: 'About', href: '#about' },
+                { label: 'Projects', href: '#projects' },
+                { label: 'Testimonials', href: '#testimonials' },
+                { label: 'Contact', href: '#footer-contact' },
               ]}
             />
           </div>
@@ -189,18 +184,17 @@ const App: React.FC = () => {
 
       {/* Footer Section */}
       <Footer
-  socialLinks={[
-    { href: 'https://twitter.com', label: 'Twitter' },
-    { href: 'https://linkedin.com', label: 'LinkedIn' },
-  ]}
-  miniNavLinks={[
-    { href: '#header', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#footer-contact', label: 'Contact' }
-  ]}
-  privacyPolicy="© 2024 Saurav Gautam. All rights reserved."
-/>
-
+        socialLinks={[
+          { href: 'https://twitter.com', label: 'Twitter' },
+          { href: 'https://linkedin.com', label: 'LinkedIn' },
+        ]}
+        miniNavLinks={[
+          { href: '#header', label: 'Home' },
+          { href: '#about', label: 'About' },
+          { href: '#footer-contact', label: 'Contact' }
+        ]}
+        privacyPolicy="© 2024 Saurav Gautam. All rights reserved."
+      />
     </div>
   );
 };

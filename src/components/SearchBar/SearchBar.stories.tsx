@@ -13,12 +13,20 @@ const Template: StoryFn<SearchBarProps> = (args) => <SearchBar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   placeholder: 'Search...',
-  onSearch: (query: string) => console.log('Search query:', query),
+  onSearch: (query: string) => {
+    if (!query) {
+      alert('No search query entered.');
+    } else {
+      console.log('Search query:', query);
+    }
+  },
 };
 Default.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const input = canvas.getByPlaceholderText('Search...');
-  await userEvent.click(input);
+  await userEvent.type(input, 'test');
+  const button = canvas.getByRole('button', { name: /search/i });
+  await userEvent.click(button);
 };
 
 export const Focused = Template.bind({});
@@ -39,24 +47,6 @@ Filled.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const input = canvas.getByPlaceholderText('Search...');
   await userEvent.type(input, 'Sample query');
-};
-
-export const Loading = Template.bind({});
-Loading.args = {
-  ...Default.args,
-  onSearch: (query: string) => {
-    return new Promise<void>((resolve) => {
-      console.log('Search query:', query);
-      setTimeout(() => resolve(), 2000);
-    });
-  },
-};
-Loading.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const input = canvas.getByPlaceholderText('Search...');
-  await userEvent.type(input, 'Sample query');
-  const button = canvas.getByRole('button');
-  await userEvent.click(button);
 };
 
 

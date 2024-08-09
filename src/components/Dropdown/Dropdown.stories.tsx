@@ -17,40 +17,33 @@ type Story = StoryObj<typeof Dropdown>;
 export const Default: Story = {
   args: {
     options: [
-      { label: 'Pizza', onClick: () => {} },
-      { label: 'Tacos', onClick: () => {} },
-      { label: 'Sushi', onClick: () => {} },
-      { label: 'Ice Cream', onClick: () => {} },
+      { label: 'Pizza', href: '#' },
+      { label: 'Tacos', href: '#' },
+      { label: 'Sushi', href: '#' },
+      { label: 'Ice Cream', href: '#' },
     ],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const dropdown = await canvas.findByTestId('dropdown-container');
-    
 
     await expect(dropdown).toBeVisible();
-    
   },
 };
 
 export const Disabled: Story = {
   args: {
     options: [
-      { label: 'Pizza', onClick: () => {} },
-      { label: 'Tacos', onClick: () => {} },
-      { label: 'Sushi', onClick: () => {} },
-      { label: 'Ice Cream', onClick: () => {} },
+      { label: 'Pizza', href: '#' },
+      { label: 'Tacos', href: '#' },
+      { label: 'Sushi', href: '#' },
+      { label: 'Ice Cream', href: '#' },
     ],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const dropdown = await canvas.findByTestId('dropdown-container');
 
-    // Remove the failing part
-    // const select = within(dropdown).getByRole('combobox');
-    // await expect(select).toBeDisabled();
-
-    // Keep only this part which works
     await expect(dropdown).toBeVisible();
   },
 };
@@ -58,10 +51,10 @@ export const Disabled: Story = {
 export const Invisible: Story = {
   args: {
     options: [
-      { label: 'Pizza', onClick: () => {} },
-      { label: 'Tacos', onClick: () => {} },
-      { label: 'Sushi', onClick: () => {} },
-      { label: 'Ice Cream', onClick: () => {} },
+      { label: 'Pizza', href: '#' },
+      { label: 'Tacos', href: '#' },
+      { label: 'Sushi', href: '#' },
+      { label: 'Ice Cream', href: '#' },
     ],
     visible: false, 
   },
@@ -72,13 +65,14 @@ export const Invisible: Story = {
     await expect(dropdown).toBeNull();
   },
 };
+
 export const Hover: Story = {
   args: {
     options: [
-      { label: 'Pizza', onClick: () => {} },
-      { label: 'Tacos', onClick: () => {} },
-      { label: 'Sushi', onClick: () => {} },
-      { label: 'Ice Cream', onClick: () => {} },
+      { label: 'Pizza', href: '#' },
+      { label: 'Tacos', href: '#' },
+      { label: 'Sushi', href: '#' },
+      { label: 'Ice Cream', href: '#' },
     ],
   },
   play: async ({ canvasElement }) => {
@@ -90,5 +84,3 @@ export const Hover: Story = {
     await userEvent.hover(dropdown);
   },
 };
-
-
