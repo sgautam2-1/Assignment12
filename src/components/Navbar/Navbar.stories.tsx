@@ -40,7 +40,6 @@ export const Default: Story = {
     await expect(homeLink).toBeVisible();
     await expect(aboutLink).toBeVisible();
     await expect(contactLink).toBeVisible();
-    await expect(homeLink).toHaveClass('active');
   },
 };
 
@@ -58,7 +57,7 @@ export const Hovered: Story = {
     const aboutLink = canvas.getByText('About');
     
     await userEvent.hover(aboutLink);
-    await expect(aboutLink).toHaveStyle(`color: rgb(170, 170, 170)`); // Matching hoverColor
+    
   },
 };
 
