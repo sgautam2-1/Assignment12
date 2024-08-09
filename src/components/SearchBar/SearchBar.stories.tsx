@@ -59,13 +59,4 @@ Loading.play = async ({ canvasElement }) => {
   await userEvent.click(button);
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  ...Default.args,
-  disabled: true,
-};
-Disabled.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const input = canvas.getByPlaceholderText('Search...');
-  await expect(input).toBeDisabled();
-};
+

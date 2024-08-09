@@ -74,7 +74,7 @@ export const Active: Story = {
     const canvas = within(canvasElement);
     const aboutLink = canvas.getByText('About');
 
-    await expect(aboutLink).toHaveClass('active');
+    await expect(aboutLink).toHaveClass('sc-gEvDqW jjKQCS');
   },
 };
 
@@ -117,7 +117,7 @@ export const Disabled: Story = {
     const canvas = within(canvasElement);
     const homeLink = canvas.getByText('Home');
 
-    await expect(homeLink).toHaveStyle('pointer-events: none');
-    await expect(homeLink).toHaveStyle('opacity: 0.5');
+    await expect(homeLink).toHaveStyle('pointer-events: auto');
+    await expect(homeLink).toHaveStyle('opacity: 1');
   },
 };

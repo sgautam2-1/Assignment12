@@ -30,9 +30,11 @@ const DropdownMenu = styled.div`
   }
 `;
 
-const Dropdown: React.FC<{ options: { label: string; onClick: () => void }[] }> = ({ options }) => {
+const Dropdown: React.FC<{ options: { label: string; onClick: () => void }[]; visible?: boolean }> = ({ options, visible = true }) => {
+  if (!visible) return null;
+
   return (
-    <DropdownMenu>
+    <DropdownMenu data-testid="dropdown-container">
       <span>Menu</span>
       <div className="dropdown-content">
         {options.map((option, index) => (
@@ -44,5 +46,6 @@ const Dropdown: React.FC<{ options: { label: string; onClick: () => void }[] }> 
     </DropdownMenu>
   );
 };
+
 
 export default Dropdown;

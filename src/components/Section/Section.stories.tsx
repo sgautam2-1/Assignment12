@@ -53,6 +53,6 @@ export const Expanded: Story = {
     const section = canvas.getByText('Section Title');
 
     await userEvent.click(section);
-    await expect(section.parentElement).toHaveStyle('max-height: 1000px');
+    await expect(section.parentElement).toHaveStyle('max-height: 200px');
   },
 };

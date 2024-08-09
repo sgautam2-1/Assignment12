@@ -9,6 +9,6 @@ export interface DropdownProps {
   options: Option[];
   disabled?: boolean;
   backgroundColor?: string;
-  visible?: boolean; // Add the visible property
+  visible?: boolean; 
 }
 
