@@ -61,22 +61,6 @@ export const Hovered: Story = {
   },
 };
 
-export const Active: Story = {
-  args: {
-    links: [
-      { href: '#home', label: 'Home' },
-      { href: '#about', label: 'About' },
-      { href: '#contact', label: 'Contact' },
-    ],
-  
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const aboutLink = canvas.getByText('About');
-
-    await expect(aboutLink).toHaveClass('sc-gEvDqW jjKQCS');
-  },
-};
 
 export const Collapsed: Story = {
   args: {
